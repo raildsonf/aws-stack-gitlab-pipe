@@ -1,0 +1,29 @@
+image:
+  name: hashicorp/packer:1.8
+  entrypoint:
+    - '/usr/bin/env'
+    - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+
+variables:
+ AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+ AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+ ANSIBLE_HOST_KEY_CHECKING: 'false'
+
+before_script:
+ - apk add ansible openssh
+ - packer --version
+ - packer init .
+
+stages:
+ - validate
+ - build
+
+validate:
+ stage: validate
+ script:
+ - packer validate .
+
+build:
+ stage: build
+ script:
+ - packer build .

@@ -1,0 +1,29 @@
+---
+- name: Setup Docker
+  hosts: 'all'
+  become: yes
+  become_method: sudo
+  gather_facts: no
+  tasks:
+    - name: Install Epel Repo
+      command: "sudo amazon-linux-extras install epel -y"
+
+    - name: Yum update
+      yum:
+        name: "*"
+        state: latest
+
+    - name: Install Docker
+      command: "sudo amazon-linux-extras install docker -y"
+
+    - name: Add ec2-user to docker group
+      user:
+        name: ec2-user
+        groups: docker
+        append: yes
+
+    - name: Start Docker
+      service:
+        name: docker
+        enabled: true
+        state: started

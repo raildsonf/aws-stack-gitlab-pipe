@@ -1,0 +1,9 @@
+variable "vpc" {}
+variable "subnet_ids" {}
+variable "aws_key_pair" {}
+variable "aws_security_group_alb" {}
+variable "lb_target_group" {}
+variable "ec2_instance_type" {}
+variable "docker_map_port" {}
+variable "docker_image" {}
+variable "app" {}
